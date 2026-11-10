@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111729">
+  <meta name="description" content="你吃出了什麼人生？五分鐘體驗從20歲到60歲的營養人生選擇。">
+  <title>你吃出了什麼人生？｜營養人生模擬器</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif;color:#f6f5fb;background:#0b1020;font-synthesis:none}
+    *{box-sizing:border-box}body{margin:0;min-height:100dvh;background:radial-gradient(circle at 50% 0%,#29344f 0%,#111729 42%,#0b1020 100%);line-height:1.65}
+    button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #ffe6a4;outline-offset:3px}
+    .shell{max-width:510px;min-height:100dvh;margin:auto;padding:18px 18px max(24px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:.78rem;letter-spacing:.04em;color:#c5cce0}
+    .brand{font-weight:900;color:#ffe1a2}.chip{border:1px solid #52617c;border-radius:99px;padding:5px 10px;background:#222b43}
+    .panel{background:linear-gradient(160deg,#212b44,#151e33);border:1px solid #394966;border-radius:22px;padding:22px;box-shadow:0 18px 60px #03060f66;flex:1;display:flex;flex-direction:column}
+    h1,h2,p{margin-top:0}h1{font-size:clamp(2rem,8vw,2.8rem);line-height:1.24;letter-spacing:-.035em;margin-bottom:14px}h2{font-size:1.55rem;line-height:1.38;margin-bottom:13px}p{color:#d5dbee}small,.muted{color:#abb8d0}
+    .eyebrow{color:#ffd88c;font-size:.8rem;letter-spacing:.14em;font-weight:800;margin-bottom:12px}
+    .hero{display:grid;place-items:center;position:relative;min-height:210px;margin:14px 0 22px;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 52%,#50628b,#293a56 49%,#1b2941 80%)}
+    .hero::before{content:"";position:absolute;width:240px;height:240px;border:2px dashed #ffffff30;border-radius:50%}.hero .big{font-size:5rem;filter:drop-shadow(0 15px 12px #09112399);z-index:1}.hero .orbit{position:absolute;font-size:1.7rem;filter:drop-shadow(0 4px 5px #0007)}
+    .orbit.a{top:16px;left:15%}.orbit.b{right:12%;top:30px}.orbit.c{bottom:13px;right:17%}.orbit.d{bottom:20px;left:14%}
+    .cta,.opt{width:100%;border-radius:14px;border:1px solid #6d7b96;padding:14px 15px;text-align:left;transition:transform .12s,background .12s;touch-action:manipulation}.cta:active,.opt:active{transform:scale(.99)}
+    .cta{border:0;color:#172037;background:#ffda91;font-weight:900;text-align:center;margin-top:auto;min-height:52px}.cta:hover{background:#ffe5af}.ghost{background:transparent;border:1px solid #697691;color:#e0e6f3;margin-top:10px}
+    .opts{display:grid;gap:10px;margin-top:18px}.opt{color:#f9fbff;background:#2a3550}.opt:hover{background:#374762}.opt[disabled]{opacity:.65;cursor:default}.opt.selected{border-color:#ffda91;background:#46506a}.opt strong{display:block;font-size:.98rem}.opt span{display:block;font-size:.82rem;color:#c3cde0;margin-top:2px}
+    .progress-track,.meter{height:8px;background:#48546c;border-radius:99px;overflow:hidden}.progress-fill,.meter-fill{height:100%;background:#ffcf7a;border-radius:99px;transition:width .35s ease}.progress-track{margin-bottom:22px}
+    .row{display:flex;justify-content:space-between;align-items:center;gap:12px}.age{font-size:1.02rem;color:#ffd88c;font-weight:800}.scene{border:1px solid #496080;background:linear-gradient(145deg,#394a67,#233149);height:170px;display:flex;align-items:center;justify-content:center;border-radius:18px;font-size:5rem;margin:12px 0 20px;position:relative;overflow:hidden}.scene::after{content:"";position:absolute;bottom:0;height:22px;width:100%;background:#19283c77}
+    .story{font-size:1.04rem;color:#f5f5fd;line-height:1.86;white-space:pre-line}.hint{font-size:.8rem;color:#b5c2d5;margin-top:12px}
+    .feedback{background:#283953;border-left:3px solid #f8cc82;padding:15px;border-radius:12px;color:#f3f0e9;margin-top:18px;font-size:.94rem}.feedback-label{font-size:.76rem;color:#ffe0a5;font-weight:900;letter-spacing:.08em;margin-bottom:7px}
+    .meters{display:grid;gap:12px;margin-top:22px}.meter-label{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:4px}.meter-fill.energy{background:#f7c56e}.meter-fill.balance{background:#74d7b5}.meter-fill.habit{background:#a7b9fc}
+    .result-art{font-size:5rem;text-align:center;padding:16px}.result-title{text-align:center;color:#ffe0a4}.result-desc{text-align:center}.report{border-top:1px solid #49536a;padding-top:18px;margin-top:22px}.report h3{font-size:.98rem;margin:0 0 9px;color:#f7d99c}.report p{font-size:.94rem;margin-bottom:17px}
+    .foot{padding:16px 8px 0;text-align:center;font-size:.72rem;color:#8594af}.hidden{display:none!important}.fade{animation:appear .22s ease-out}@keyframes appear{from{opacity:.3;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    @media(min-width:650px){.shell{padding-top:28px;padding-bottom:30px}.panel{min-height:690px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top"><div class="brand">✦ NUTRITION LIFE</div><div class="chip" id="top-label">5 MIN EXPERIENCE</div></header>
+    <div class="panel fade" id="app" aria-live="polite"></div>
+    <footer class="foot">營養學期末作品 DEMO · 健康狀態為教學模擬，非個人醫療預測</footer>
+  </main>
+  <script>
+  'use strict';
+  // 所有事件集中在這裡，方便你日後改寫文字、選項或計分。
+  // delta 順序依序為：[能量管理、營養均衡、長期習慣]，分數只是遊戲化指標。
+  const EVENTS = [
+    {age:20,icon:'⏰',title:'睡過頭的早餐',story:'大學第一堂課快開始了！你沒吃早餐，只剩五分鐘可以買東西。你會怎麼做？',topic:'醣類、蛋白質與能量供應',
+      options:[
+        {text:'飯糰＋茶葉蛋＋無糖豆漿',desc:'花一點時間買齊早餐',delta:[7,8,6],tag:'balanced',reply:'你選擇了含醣類與蛋白質的早餐。營養是否充足仍取決於份量及一天其他餐次。'},
+        {text:'只喝黑咖啡，中午再吃',desc:'最快，但暫時沒有能量來源',delta:[-7,-4,-4],tag:'skip',reply:'咖啡因可能短暫提升警覺，但黑咖啡幾乎不提供熱量；若經常省略餐點，須留意全天攝取。'},
+        {text:'甜麵包＋含糖奶茶',desc:'方便，也能快速補充能量',delta:[3,-5,-3],tag:'sweet',reply:'這份早餐能供應熱量，但添加糖可能偏多、蛋白質較少。偶爾吃不代表飲食一定不健康。'}]},
+    {age:22,icon:'🏋️',title:'第一次認真健身',story:'你開始重量訓練，希望增加肌肉。朋友說：「狂喝乳清就會變壯！」你決定……',topic:'蛋白質、總熱量與肌肉合成',
+      options:[
+        {text:'拼命增加蛋白質，其他照舊',delta:[1,0,-2],tag:'protein',reply:'蛋白質確實重要，但肌肉成長也與總熱量、漸進訓練及恢復有關，並非越多越好。'},
+        {text:'安排足夠熱量與蛋白質，持續訓練',delta:[7,8,8],tag:'balanced',reply:'適當能量攝取、足量蛋白質及阻力訓練，是支持增肌的較完整策略。'},
+        {text:'完全不吃澱粉，只吃雞胸肉與青菜',delta:[-5,-7,-5],tag:'restrict',reply:'醣類有助提供運動能量。長期不必要地排除主食，可能讓訓練與飲食安排更困難。'}]},
+    {age:25,icon:'🍱',title:'每天外食的上班族',story:'開始工作後，你常常外食。薪水有限，午餐選擇也不多。今天你會……',topic:'飲食多樣性、纖維與脂質',
+      options:[
+        {text:'固定吃炸物便當，省得想',delta:[2,-6,-5],tag:'convenience',reply:'油炸食品並非完全不能吃，但如果長期缺少蔬菜及多樣食材，營養攝取可能不均衡。'},
+        {text:'輪流選主食、蛋白質與蔬菜較齊全的餐點',delta:[6,8,7],tag:'balanced',reply:'外食也能兼顧食物種類。菜色輪替比堅持某一種「完美餐」更可持續。'},
+        {text:'只吃一盒沒主食的生菜沙拉',delta:[-5,1,-3],tag:'restrict',reply:'蔬菜提供纖維與微量營養素，但若整餐缺乏足量能量與蛋白質，未必符合需求。'}]},
+    {age:28,icon:'🧋',title:'一杯飲料的習慣',story:'每天工作都很忙，買飲料漸漸變成你的放鬆儀式。你選擇……',topic:'添加糖與液態熱量',
+      options:[
+        {text:'每天喝一杯全糖珍珠奶茶',delta:[2,-5,-6],tag:'sweet',reply:'含糖飲料可能在沒有明顯飽足感的情況下增加熱量與添加糖攝取，頻率和份量很重要。'},
+        {text:'多喝水或無糖茶，想喝甜飲時再享用',delta:[5,6,8],tag:'balanced',reply:'把水當作主要飲品，並保留偶爾享用甜飲的彈性，是較容易長期維持的策略。'},
+        {text:'每天喝果汁，覺得水果一定健康',delta:[2,-2,-2],tag:'sweet',reply:'純果汁含有部分營養素，但纖維通常少於完整水果，也容易攝取較多游離糖。'}]},
+    {age:30,icon:'🩺',title:'健檢報告的提醒',story:'健康檢查顯示 LDL 膽固醇偏高。醫師建議你調整飲食並追蹤。你會……',topic:'脂肪酸種類與心血管健康',
+      options:[
+        {text:'完全不吃任何脂肪',delta:[-4,-7,-5],tag:'restrict',reply:'脂肪是必需營養素，重點通常不是完全不吃，而是來源、總攝取量與整體飲食模式。'},
+        {text:'減少飽和脂肪，適度以不飽和脂肪取代',delta:[5,8,7],tag:'balanced',reply:'以適量的不飽和脂肪取代部分飽和脂肪，有助改善血脂管理；仍應依醫囑追蹤。'},
+        {text:'只減少澱粉，其他完全不變',delta:[-2,-3,-2],tag:'shortcut',reply:'單純減少澱粉未必能改善 LDL。通常也需要檢視脂肪種類、纖維、整體飲食與其他風險因素。'}]},
+    {age:35,icon:'🥡',title:'忙碌生活的飲食危機',story:'工作與家庭行程擠在一起。很多天你回家時都累得不想思考晚餐。你決定……',topic:'微量營養素與飲食規律',
+      options:[
+        {text:'餓了才吃零食，正餐常常省略',delta:[-5,-6,-7],tag:'skip',reply:'零食可以是飲食的一部分，但長期以零食代替多數正餐，容易漏掉重要的營養來源。'},
+        {text:'提前準備幾種簡單、營養較完整的餐點',delta:[6,7,9],tag:'balanced',reply:'預先規劃能降低忙碌時的決策成本，較有機會穩定攝取不同食物。'},
+        {text:'大量補充維他命，直接代替正常吃飯',delta:[-5,-6,-5],tag:'shortcut',reply:'補充品不能普遍取代食物提供的能量、蛋白質與其他成分；是否需要補充應視個人狀況。'}]},
+    {age:40,icon:'🏃',title:'人生第一場半馬',story:'你報名了半程馬拉松。朋友正在討論訓練日的飲食和跑步補給。你會……',topic:'肝醣、水分與運動營養',
+      options:[
+        {text:'為了不變胖，跑步前後都不吃',delta:[-8,-5,-5],tag:'restrict',reply:'長時間運動需考慮能量與補水需求。刻意忽略補給可能影響表現與恢復。'},
+        {text:'依訓練長度安排醣類、水分及必要的電解質',delta:[8,7,7],tag:'balanced',reply:'隨訓練量調整醣類與水分攝取，有助支援運動表現；補充量應依環境與個人流汗狀況調整。'},
+        {text:'只喝高蛋白飲品，不需要其他補給',delta:[-3,-4,-3],tag:'protein',reply:'蛋白質有助修復與適應，但長時間跑步的主要燃料與補水需求不能只靠蛋白質。'}]},
+    {age:45,icon:'⚖️',title:'體重漸漸改變',story:'近年活動量下降，體重慢慢上升。你想做出一點改變，但不希望生活被飲食控制。你會……',topic:'能量平衡與體重管理',
+      options:[
+        {text:'直接不吃晚餐，越少越好',delta:[-6,-5,-5],tag:'restrict',reply:'體重管理不是單純餓得越久越好。過度限制可能讓營養需求更難滿足。'},
+        {text:'檢視份量、日常活動量與長期可持續的習慣',delta:[6,7,8],tag:'balanced',reply:'體重與多重因素相關。從可持續的飲食與活動習慣著手，通常比極端方法更穩定。'},
+        {text:'買宣稱能快速燃脂的產品',delta:[-4,-4,-6],tag:'shortcut',reply:'誇大快速燃脂效果的產品缺乏可靠保證，某些產品還可能有安全風險。'}]},
+    {age:55,icon:'🦴',title:'開始留意骨骼健康',story:'身邊朋友開始討論骨質疏鬆。你也想提前照顧骨骼健康。你會……',topic:'鈣、維生素 D 與骨骼健康',
+      options:[
+        {text:'只靠大量喝牛奶，其他都不用做',delta:[1,-2,-3],tag:'shortcut',reply:'乳製品可以是鈣的來源之一，但骨骼健康也與維生素 D、運動及其他因素有關。'},
+        {text:'留意鈣與維生素 D，搭配適當負重運動',delta:[5,7,8],tag:'balanced',reply:'足夠的鈣、維生素 D 與適當運動，是維持骨骼健康的重要環節。'},
+        {text:'沒有症狀就不用管',delta:[0,-4,-5],tag:'skip',reply:'骨質流失早期可能沒有明顯症狀，風險評估與預防不一定要等到不舒服才開始。'}]},
+    {age:60,icon:'🌿',title:'退休後的生活',story:'退休後，食慾和活動量都跟以前不太一樣。你開始關心能不能維持肌肉與自主生活能力。你會……',topic:'老年蛋白質需求與肌少症預防',
+      options:[
+        {text:'年紀大了，盡量少吃蛋白質',delta:[-5,-7,-6],tag:'restrict',reply:'高齡者通常仍需要足夠蛋白質來支持肌肉維持；特殊疾病的攝取量則需個別評估。'},
+        {text:'維持足夠能量與蛋白質，搭配阻力訓練',delta:[7,8,9],tag:'balanced',reply:'足夠營養與適當阻力訓練，有助維持肌力與身體功能。'},
+        {text:'只吃鈣片，認為能防止所有肌肉流失',delta:[-3,-5,-4],tag:'shortcut',reply:'鈣與骨骼健康相關，但無法取代蛋白質、總能量與運動對肌肉維持的作用。'}]}
+  ];
+  const app = document.getElementById('app');
+  const topLabel = document.getElementById('top-label');
+  const initial = () => ({index:0,phase:'intro',scores:[50,50,50],choices:[],tags:{}});
+  let state = initial();
+  const clamp = v => Math.max(0,Math.min(100,v));
+  const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function meter(label,value,type){return `<div><div class="meter-label"><span>${label}</span><b>${Math.round(value)}/100</b></div><div class="meter"><div class="meter-fill ${type}" style="width:${value}%"></div></div></div>`}
+  function meters(){return `<div class="meters">${meter('⚡ 能量管理',state.scores[0],'energy')}${meter('🥬 營養均衡',state.scores[1],'balance')}${meter('🌱 健康習慣',state.scores[2],'habit')}</div>`}
+  function priorStory(){
+    if(!state.choices.length)return '';
+    const last=state.choices.at(-1);
+    if(last.tag==='balanced')return '回頭看，你曾經嘗試替自己找到更適合的飲食方式。時間繼續往前走……';
+    if(last.tag==='restrict'||last.tag==='skip')return '你忙著應付生活，飲食有時變成最後才考慮的事。時間繼續往前走……';
+    return '你的選擇有方便的一面，也有值得重新思考的地方。時間繼續往前走……';
+  }
+  function render(){
+    app.classList.remove('fade');void app.offsetWidth;app.classList.add('fade');
+    if(state.phase==='intro'){
+      topLabel.textContent='5 MIN EXPERIENCE';
+      app.innerHTML=`<div class="eyebrow">YOUR LIFE, YOUR CHOICES</div><h1>你吃出了<br>什麼人生？</h1><p>從 20 歲到 60 歲，10 次日常選擇，體驗飲食習慣如何陪你走過人生。</p><div class="hero" aria-hidden="true"><div class="orbit a">🥦</div><div class="orbit b">🥚</div><div class="big">🧑</div><div class="orbit c">🥛</div><div class="orbit d">🍚</div></div><p class="muted">⏱ 約 4–5 分鐘　📱 適合手機遊玩<br>沒有必須完美的每一餐，只有不斷累積的選擇。</p><button class="cta" id="start">開始我的營養人生 →</button>`;
+      document.getElementById('start').addEventListener('click',()=>{state.phase='question';render()});return;
+    }
+    if(state.phase==='question'){
+      const e=EVENTS[state.index];topLabel.textContent=`第 ${state.index+1} / ${EVENTS.length} 個事件`;
+      app.innerHTML=`<div class="row"><span class="age">${e.age} 歲</span><span class="muted">${Math.round((state.index/EVENTS.length)*100)}% 完成</span></div><div class="progress-track" aria-label="遊戲進度"><div class="progress-fill" style="width:${state.index/EVENTS.length*100}%"></div></div><div class="scene" aria-hidden="true">${e.icon}</div><div class="eyebrow">LIFE CHAPTER ${String(state.index+1).padStart(2,'0')}</div><h2>${esc(e.title)}</h2>${state.index?`<p class="muted" style="font-size:.84rem">${esc(priorStory())}</p>`:''}<p class="story">${esc(e.story)}</p><div class="opts">${e.options.map((o,i)=>`<button class="opt" data-option="${i}"><strong>${'ABC'[i]}. ${esc(o.text)}</strong>${o.desc?`<span>${esc(o.desc)}</span>`:''}</button>`).join('')}</div><div class="hint">請依直覺選擇；沒有任何一餐能單獨決定健康。</div>`;
+      app.querySelectorAll('[data-option]').forEach(btn=>btn.addEventListener('click',()=>choose(Number(btn.dataset.option))));return;
+    }
+    if(state.phase==='feedback'){
+      const e=EVENTS[state.index],o=e.options[state.selected];topLabel.textContent=`第 ${state.index+1} / ${EVENTS.length} 個事件`;
+      app.innerHTML=`<div class="row"><span class="age">${e.age} 歲</span><span class="muted">你的選擇已記錄</span></div><div class="progress-track"><div class="progress-fill" style="width:${(state.index+1)/EVENTS.length*100}%"></div></div><div class="scene" aria-hidden="true">${e.icon}</div><div class="eyebrow">這段人生的選擇</div><h2>${esc(o.text)}</h2><div class="feedback"><div class="feedback-label">營養小提醒 · ${esc(e.topic)}</div>${esc(o.reply)}</div>${meters()}<div style="flex:1;min-height:20px"></div><button class="cta" id="next">${state.index===EVENTS.length-1?'查看我的人生結局 →':'時間快轉，繼續人生 →'}</button>`;
+      document.getElementById('next').addEventListener('click',()=>{state.index++;state.phase=state.index>=EVENTS.length?'result':'question';render()});return;
+    }
+    if(state.phase==='result')renderResult();
+  }
+  function choose(i){
+    if(state.phase!=='question')return;
+    const e=EVENTS[state.index],o=e.options[i];
+    state.scores=state.scores.map((v,k)=>clamp(v+o.delta[k]));
+    state.choices.push({age:e.age,title:e.title,answer:o.text,tag:o.tag,topic:e.topic});
+    state.tags[o.tag]=(state.tags[o.tag]||0)+1;
+    state.selected=i;state.phase='feedback';render();
+  }
+  function getEnding(){
+    const s=state.scores,t=state.tags;
+    if(s[1]>=70&&s[2]>=70)return {name:'均衡生活大師',icon:'🌿',description:'你逐漸培養出能配合生活調整的飲食習慣。重視食物多樣性，也願意持續學習。'};
+    if((t.protein||0)>=2)return {name:'蛋白質狂熱者',icon:'🏋️',description:'你十分重視蛋白質，但營養不只有蛋白質。不同來源的醣類、脂質與微量營養素也很重要。'};
+    if((t.skip||0)+(t.convenience||0)+(t.sweet||0)>=3)return {name:'咖啡續命上班族',icon:'☕',description:'忙碌時你常優先考慮方便，容易忽略飲食的多樣性與規律。小幅、可持續的改變會很有幫助。'};
+    return {name:'營養探索實踐家',icon:'🧭',description:'你的選擇有擅長的地方，也存在一些可以調整的習慣。營養管理是一段持續學習的旅程。'};
+  }
+  function report(){
+    const picks=state.choices,positive=picks.filter(p=>p.tag==='balanced'),other=picks.filter(p=>p.tag!=='balanced');
+    const strength=positive.length?`在「${positive[0].title}」中，你展現了考慮整體營養需求的能力。`:'你願意思考每個人生階段的飲食問題，這是改善習慣的起點。';
+    const improvement=other.length?`回顧「${other[0].title}」的選擇，試著考慮份量、頻率與全天營養是否足夠。`:'你多次選擇較完整的飲食策略，接下來可以思考如何在預算與時間有限時持續實踐。';
+    return {strength,improvement};
+  }
+  function renderResult(){
+    topLabel.textContent='人生報告';const e=getEnding(),r=report();
+    app.innerHTML=`<div class="eyebrow" style="text-align:center">YOUR NUTRITION LIFE REPORT</div><div class="result-art" aria-hidden="true">${e.icon}</div><h1 class="result-title">${e.name}</h1><p class="result-desc">${e.description}</p>${meters()}<div class="report"><h3>✨ 你的營養優勢</h3><p>${esc(r.strength)}</p><h3>🔍 可以調整的習慣</h3><p>${esc(r.improvement)}</p><h3>📚 這趟人生的營養觀念</h3><p>健康不取決於單一食物或某一次選擇，而與長期的飲食型態、身體活動、生活條件及個人需求有關。</p><h3>📝 你做過的選擇</h3><details><summary style="cursor:pointer;color:#ffd88c">展開 10 個人生事件紀錄</summary><ol style="padding-left:20px">${state.choices.map(c=>`<li style="margin:8px 0">${c.age} 歲・${esc(c.title)}：${esc(c.answer)}</li>`).join('')}</ol></details></div><div style="flex:1;min-height:20px"></div><button class="cta" id="share">複製我的人生結果</button><button class="cta ghost" id="restart">重新體驗人生 ↻</button>`;
+    document.getElementById('restart').addEventListener('click',()=>{state=initial();render()});
+    document.getElementById('share').addEventListener('click',async()=>{
+      const summary=`我在《你吃出了什麼人生？》得到「${e.name}」！\n⚡ 能量管理 ${state.scores[0]}/100\n🥬 營養均衡 ${state.scores[1]}/100\n🌱 健康習慣 ${state.scores[2]}/100\n${window.location.href.split('#')[0]}`;
+      try{await navigator.clipboard.writeText(summary);document.getElementById('share').textContent='已複製！可以貼給朋友';}catch{window.prompt('複製下方文字，分享你的結果：',summary)}
+    });
+  }
+  render();
+  </script>
+</body>
+</html>
